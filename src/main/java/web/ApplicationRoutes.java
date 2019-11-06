@@ -24,8 +24,6 @@ public class ApplicationRoutes {
                                 .andRoute(DELETE("/{id}"), hotelHandler::delete)
                                 .andRoute(GET("/startingwith/{letter}"), hotelHandler::findHotelsWithLetter)
                                 .andRoute(GET("/fromstate/{state}"), hotelHandler::findHotelsInState)
-                                .andRoute(RequestPredicates.GET("/hello")
-                                .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), hotelHandler::hello)
                 ));
     }
 }
