@@ -1,4 +1,4 @@
-package hello;
+package web;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ClientResponse;

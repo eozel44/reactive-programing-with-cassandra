@@ -1,8 +1,11 @@
 package domain;
 
+import org.springframework.data.cassandra.core.mapping.Table;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@Table("weather")
 public class Weather implements Serializable {
 
     private int weatherStationId;
@@ -24,6 +27,47 @@ public class Weather implements Serializable {
     private double pressureMin;
     private double radiation;
     private double temperature;
+
+    public Weather(int weatherStationId,
+            String weatherStationName,
+            double elevation,
+            double latitude,
+            double longitude,
+            String stationNumber,
+            String city,
+            String state,
+            LocalDateTime completeDate,
+            LocalDateTime observationDate,
+            int year,
+            int month,
+            int day,
+            double precipitation,
+            double pressure,
+            double pressureMax,
+            double pressureMin,
+            double radiation,
+            double temperature) {
+        this.weatherStationId = weatherStationId;
+        this.weatherStationName = weatherStationName;
+        this.elevation = elevation;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.stationNumber = stationNumber;
+        this.city = city;
+        this.state = state;
+        this.completeDate = completeDate;
+        this.observationDate = observationDate;
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        this.precipitation = precipitation;
+        this.pressure = pressure;
+        this.pressureMax = pressureMax;
+        this.pressureMin = pressureMin;
+        this.radiation = radiation;
+        this.temperature = temperature;
+
+    }
 
     public double getElevation() {
         return elevation;
