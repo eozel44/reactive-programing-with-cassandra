@@ -1,17 +1,21 @@
-package repository;
+package com.example.webfluxcassandra.repository;
 
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
-import domain.Weather;
+import com.example.webfluxcassandra.domain.Weather;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.ReactiveCassandraOperations;
+import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
+@Repository
 public class CassandraWeatherRepository implements WeatherRepository {
     private final ReactiveCassandraOperations cassandraTemplate;
 
+    @Autowired
     public CassandraWeatherRepository(ReactiveCassandraOperations cassandraTemplate) {
         this.cassandraTemplate = cassandraTemplate;
     }
@@ -32,14 +36,15 @@ public class CassandraWeatherRepository implements WeatherRepository {
     }
 
     @Override
-    public Mono<Boolean> delete(UUID weatherId) {
-        return this.cassandraTemplate.deleteById(weatherId,Weather.class);
+    public Mono<Void> delete(Weather weather) {
+        return this.cassandraTemplate.delete(weather).then();
     }
 
     @Override
     public Flux<Weather> findByCity(String city) {
         Select select = QueryBuilder.select().from("weather");
         select.where(QueryBuilder.eq("city", city));
+        System.out.println(select.toString());
         return this.cassandraTemplate.select(select,Weather.class);
     }
 }

@@ -1,4 +1,4 @@
-package config;
+package com.example.webfluxcassandra.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractReactiveCassandraConfiguration;
