@@ -8,7 +8,7 @@ public class CassandraConfiguration extends AbstractReactiveCassandraConfigurati
 
     @Override
     protected String getKeyspaceName() {
-        return "sample";
+        return "weatherspace";
     }
 
 }
