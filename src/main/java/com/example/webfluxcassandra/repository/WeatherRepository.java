@@ -13,4 +13,5 @@ public interface WeatherRepository {
     Mono<Weather> findOne(UUID weatherId);
     Mono<Void> delete(Weather weather);
     Flux<Weather> findByCity(String city);
+    Flux<Weather> getAllWeathers();
 }

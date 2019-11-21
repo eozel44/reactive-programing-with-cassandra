@@ -1,22 +1,20 @@
-
 package com.example.webfluxcassandra;
 
-import com.example.webfluxcassandra.controller.WeatherController;
 import com.example.webfluxcassandra.domain.Weather;
+import com.example.webfluxcassandra.repository.WeatherRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
-import com.example.webfluxcassandra.repository.WeatherRepository;
-
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.UUID;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -43,24 +41,26 @@ public class Tests {
                 .jsonPath("$.id").isNotEmpty()
                 .jsonPath("$.city").isEqualTo("erzurum");
     }
-}
-/*
+
+
     @Test
-    public void testGetAllTweets() {
+    public void testGetAllWeathers() {
         webTestClient.get().uri("/weathers")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
-                .expectBodyList(Tweet.class);
+                .expectBodyList(Weather.class);
     }
 
+
+
     @Test
-    public void testGetSingleTweet() {
-        Tweet tweet = tweetRepository.save(new Tweet("Hello, World!")).block();
+    public void testGetSingleWeather() {
+        Weather weather = weatherRepository.save(new Weather(UUID.randomUUID(), "ankara", LocalDateTime.now(), 22d)).block();
 
         webTestClient.get()
-                .uri("/tweets/{id}", Collections.singletonMap("id", tweet.getId()))
+                .uri("/weathers/{id}", Collections.singletonMap("id", weather.getId()))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -69,31 +69,32 @@ public class Tests {
     }
 
     @Test
-    public void testUpdateTweet() {
-        Tweet tweet = tweetRepository.save(new Tweet("Initial Tweet")).block();
+    public void testUpdateWeather() {
 
-        Tweet newTweetData = new Tweet("Updated Tweet");
+        UUID id = UUID.randomUUID();
+        Weather weather = weatherRepository.save(new Weather(id, "hakkari", LocalDateTime.now(), 22d)).block();
+        Weather newWeatherData = new Weather(id, "hakkari", LocalDateTime.now(), 35d);
+
 
         webTestClient.put()
-                .uri("/tweets/{id}", Collections.singletonMap("id", tweet.getId()))
+                .uri("/weathers/update")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
-                .body(Mono.just(newTweetData), Tweet.class)
+                .body(Mono.just(newWeatherData), Weather.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
                 .expectBody()
-                .jsonPath("$.text").isEqualTo("Updated Tweet");
+                .jsonPath("$.temperature").isEqualTo(35d);
     }
 
     @Test
-    public void testDeleteTweet() {
-        Tweet tweet = tweetRepository.save(new Tweet("To be deleted")).block();
+    public void testDeleteWeather() {
+        Weather weather = weatherRepository.save(new Weather(UUID.randomUUID(), "trabzon", LocalDateTime.now(), 22d)).block();
 
         webTestClient.delete()
-                .uri("/tweets/{id}", Collections.singletonMap("id",  tweet.getId()))
+                .uri("/weathers/{id}", Collections.singletonMap("id",  weather.getId()))
                 .exchange()
                 .expectStatus().isOk();
     }
 }
- */

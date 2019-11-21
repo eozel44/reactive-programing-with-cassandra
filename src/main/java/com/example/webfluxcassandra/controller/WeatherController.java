@@ -63,9 +63,12 @@ public class WeatherController {
     }
 
     @GetMapping("/weathers/fromcity/{city}")
-    public Flux<ResponseEntity<Weather>> findByCity(@PathVariable(value = "city") String city) {
-        return weatherRepository.findByCity(city)
-                .map(weather -> ResponseEntity.ok(weather))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+    public Flux<Weather> findByCity(@PathVariable(value = "city") String city) {
+        return weatherRepository.findByCity(city);
+    }
+
+    @GetMapping("/weathers")
+    public Flux<Weather> getAllWeathers() {
+        return weatherRepository.getAllWeathers();
     }
 }

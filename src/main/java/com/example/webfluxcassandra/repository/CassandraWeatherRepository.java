@@ -47,4 +47,11 @@ public class CassandraWeatherRepository implements WeatherRepository {
         System.out.println(select.toString());
         return this.cassandraTemplate.select(select,Weather.class);
     }
+
+    @Override
+    public Flux<Weather> getAllWeathers() {
+        Select select = QueryBuilder.select().from("weather");
+        System.out.println(select.toString());
+        return this.cassandraTemplate.select(select,Weather.class);
+    }
 }
